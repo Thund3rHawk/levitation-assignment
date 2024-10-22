@@ -1,12 +1,13 @@
-// import SignIn from "./pages/auth/SignIn";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
     <div className="h-screen">
-      <SignUp/>
+      {/* <SignUp/> */}
       {/* <SignIn/> */}
+      <HomePage/>
     </div>
   );
 }

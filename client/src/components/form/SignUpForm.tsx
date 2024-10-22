@@ -26,7 +26,7 @@ export default function SignUpForm () {
             type="text"
             {...register("name", { required: "Name is required", minLength: 3 })}
             placeholder='Enter Email ID'
-            className="border p-4 w-full rounded bg-[#1F1F1F] border-[#424647] placeholder:font-thin"
+            className="border p-4 w-full rounded bg-[#1F1F1F] border-[#424647] placeholder:font-thin outline-none"
           />
           {/* {errors.name && <span className="text-red-600">{errors.name.message}</span>} */}
           <span className='text-[#B8B8B8] font-thin'>This name will be displayed with your inquiry</span>
@@ -45,7 +45,7 @@ export default function SignUpForm () {
               }
             })}
             placeholder='Enter Email ID'
-            className="border border-[#424647] p-4 w-full rounded bg-[#1F1F1F] placeholder:font-thin"
+            className="border border-[#424647] p-4 w-full rounded bg-[#1F1F1F] placeholder:font-thin outline-none"
           />
           {/* {errors.email && <span className="text-red-600">{errors.email.message}</span>} */}
           <span className='text-[#B8B8B8] font-thin'>This email will be displayed with your inquiry</span>
@@ -61,7 +61,7 @@ export default function SignUpForm () {
               minLength: { value: 6, message: "Password must be at least 6 characters long" }
             })}
             placeholder='Enter the Password'
-            className="border border-[#424647] p-4 w-full rounded bg-[#1F1F1F] placeholder:font-thin"
+            className="border border-[#424647] p-4 w-full rounded bg-[#1F1F1F] placeholder:font-thin outline-none"
           />
           {/* {errors.password && <span className="text-red-600">{errors.password.message}</span>} */}
           <span className='text-[#B8B8B8] font-thin'>Any further updates will be forwarded on this Email ID</span>

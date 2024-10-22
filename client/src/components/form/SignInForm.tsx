@@ -19,18 +19,6 @@ export default function SignInForm() {
       <h1 className='text-4xl font-bold my-3'>Let the Journey Begin!</h1>
       <h4 className='text-[#B8B8B8] mb-6'>This is basic signup page which is used for levitation <br/> assignment purpose.</h4>
       <form onSubmit={handleSubmit(onSubmit)} className="text-white">
-        {/* Name Field */}
-        {/* <div className='my-4'>
-          <label className="block my-1">Enter your name</label>
-          <input
-            type="text"
-            {...register("name", { required: "Name is required", minLength: 3 })}
-            className="border p-4 w-full rounded bg-[#1F1F1F] border-[#424647]"
-          />
-          {errors.name && <span className="text-red-600">{errors.name.message}</span>}
-          <span className='text-[#B8B8B8] font-thin'>This name will be displayed with your inquiry</span>
-        </div> */}
-
         {/* Email Field */}
         <div className='my-4'>
           <label className="block my-1">Email Address</label>
@@ -43,7 +31,7 @@ export default function SignInForm() {
                 message: "Invalid email format"
               }
             })}
-            className="border border-[#424647] p-4 w-full rounded bg-[#1F1F1F] placeholder:font-thin"
+            className="border border-[#424647] p-4 w-full rounded bg-[#1F1F1F] placeholder:font-thin outline-none"
             placeholder='Enter Email ID'
           />
           {/* {errors.email && <span className="text-red-600">{errors.email.message}</span>} */}
@@ -59,7 +47,7 @@ export default function SignInForm() {
               required: "Password is required", 
               minLength: { value: 6, message: "Password must be at least 6 characters long" }
             })}
-            className="border border-[#424647] p-4 w-full rounded bg-[#1F1F1F] placeholder:font-thin"
+            className="border border-[#424647] p-4 w-full rounded bg-[#1F1F1F] placeholder:font-thin outline-none"
             placeholder='Enter the password'
           />
           {/* {errors.password && <span className="text-red-600">{errors.password.message}</span>} */}
