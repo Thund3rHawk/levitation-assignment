@@ -1,4 +1,9 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { signUp } from '../../api/post/signUp';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import UserContext from '../../context/UserContext';
+        
 
 type SignupFormValues = {
   name: string;
@@ -8,10 +13,23 @@ type SignupFormValues = {
 
 export default function SignUpForm () {
   const { register, handleSubmit } = useForm<SignupFormValues>();
+  const {setLogin} = useContext (UserContext);
+  const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<SignupFormValues> = data => {
-    console.log(data);
-    // Handle form submission (e.g., send data to backend)
+  const onSubmit: SubmitHandler<SignupFormValues> = async data => {
+    try {
+      const res = await signUp(data.name, data.email, data.password);
+      console.log(res);
+      if (res?.status === 200){        
+        setLogin (true);
+        // navigate('/home');
+      }
+      else {
+        navigate ('/sign-in')
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

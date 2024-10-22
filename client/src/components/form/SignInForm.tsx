@@ -1,17 +1,33 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { signIn } from '../../api/post/signIn';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import UserContext from '../../context/UserContext';
 
-type SignupFormValues = {
-  name: string;
+type SigninFormValues = {
   email: string;
   password: string;
 };
 
 export default function SignInForm() {
-  const { register, handleSubmit } = useForm<SignupFormValues>();
+  const { register, handleSubmit } = useForm<SigninFormValues>();
+  const {setLogin} = useContext(UserContext)
+  const navigation = useNavigate();
 
-  const onSubmit: SubmitHandler<SignupFormValues> = data => {
-    console.log(data);
-    // Handle form submission (e.g., send data to backend)
+  const onSubmit: SubmitHandler<SigninFormValues> = async data => {
+    try {
+      const res = await signIn(data.email, data.password);
+      if (res?.status === 200){
+        console.log(res);        
+        setLogin (true);
+        // navigation ('/home');
+      }
+      else {
+        navigation ('/');
+      }
+    } catch (error) {
+      console.log("Signin error: ", error);      
+    }
   };
 
   return (

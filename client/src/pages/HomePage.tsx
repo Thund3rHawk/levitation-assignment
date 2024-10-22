@@ -33,8 +33,9 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-black ">
+    <div className="min-h-screen bg-gradient-to-b from-black to-black relative">
       <Navbar/>
+      {/* <div className="absolute rounded-full bg-[#404993] mix-blend-screen filter blur-3xl opacity-3"></div> */}
       <main className="container mx-auto px-4 py-8 text-white my-auto">
       <h1 className='text-4xl font-bold mt-20 mb-3'>Add Products</h1>
       <h4 className='text-[#B8B8B8] mb-6'>This is basic signup page which is used for levitation <br/> assignment purpose.</h4>

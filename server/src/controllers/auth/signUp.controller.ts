@@ -6,14 +6,15 @@ export const signUp = asyncHandler(async (req, res) => {
     try {
         const { email, password, name } = req.body;
         bcrypt.genSalt(10, function (err, salt) {
-            if (err) {
+            if (err) {                
+                res.send('Bcrypt Error: '+ err);
                 console.log("Bcrypt Error: ", err);
-                return;
             }
             bcrypt.hash(password, salt, async function (err, hash) {
                 if (err) {
+                    res.send('Bcrypt Hash Error: '+ err);
                     console.log('Bcrypt Hash Error: ', err);
-                    return;
+                    // return;
                 }
                 const user = await prisma.user.create({
                     data: {

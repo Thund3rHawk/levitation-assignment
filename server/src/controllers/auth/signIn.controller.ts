@@ -13,20 +13,17 @@ export const signIn = asyncHandler(async (req, res) => {
 
         if (!response) {
             res.send("User not found");
-            return;
         }
-        bcrypt.compare(password, response.password, function (err, result) {
-            if (!result) {
-                res.send("Wrong Password");
-            }
-            else {
-                res.send({
-                    message: "Login Successful",
-                    responseId: response.id,
-                });
-            }
-        });
-        res.send("Login Successfull")
+        else {
+            bcrypt.compare(password, response.password, function (err, result) {
+                if (!result) {
+                    res.send("Wrong Password");
+                }
+                else {               
+                    res.send({ message: "User Registered successfully.", data: response })
+                }
+            });
+        }
     } catch (error) {
         res.send("SignIn error: " + error);
     }
