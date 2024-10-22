@@ -9,8 +9,8 @@ const app = express();
 const port = process.env.PORT || 4000
 app.use (cors());
 
-app.use ('/api',authRoute)
-app.use ('/api',productsRoute)
+app.use ('/api/auth',authRoute)
+app.use ('/api/products',productsRoute)
 
 app.listen (port, ()=>{
     console.log(`app is listening on port: http://localhost:${port}`);    
