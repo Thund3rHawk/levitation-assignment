@@ -1,12 +1,19 @@
-import Navbar from "../../components/shared/Navbar"
+import Navbar from "../../components/shared/Navbar";
+import bodyImage from "../../assets/images/body-image.png";
+import SignInForm from "../../components/form/SignInForm";
 
 
-const SignIn = () => {
+export default function SignIn (){
   return (
-    <div className="flex justify-center">
-      <Navbar/>
+    <div className="bg-black h-screen">
+      <Navbar />
+      <div className="flex justify-center">
+        <div className="container grid grid-cols-2 gap-10 items-center h-[90vh]">
+          <img src={bodyImage} alt="body image" className="h-[83vh]" />
+          <SignInForm />         
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignIn
