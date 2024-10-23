@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function getProduct (userId: string){
+export async function getProducts (userId: string){
     try {
         const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/api/products/${userId}/get`);
         return response;

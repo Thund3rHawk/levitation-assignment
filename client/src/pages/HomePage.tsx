@@ -1,9 +1,11 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { PlusCircle, ArrowDown, ArrowUp } from 'lucide-react'
 import Navbar from '../components/shared/Navbar'
 import { createProduct } from '../api/post/createProduct'
 import UserContext from '../context/UserContext'
+import { getProducts } from '../api/get/getProducts'
+import { useNavigate } from 'react-router-dom'
 
 interface Product {
   name: string
@@ -21,10 +23,33 @@ export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([])
   const { register, handleSubmit, reset } = useForm<FormInputs>()
   const {setLogin} = useContext (UserContext);
+  const userData = JSON.parse(localStorage.getItem('userData') as string)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const res = await getProducts(userData.id); // API call to get the products
+        if (res?.data) {
+          // console.log(res.data);
+          
+          const filteredProducts = res.data.map((product: any) => ({
+            name: product.name,
+            price: product.rate as number,
+            quantity: product.qty as number,
+          }));        
+          console.log("filteredProducts are: ", filteredProducts);  
+          setProducts(filteredProducts); // Set the products in state
+        }
+      } catch (error) {
+        console.log("Error fetching products", error);
+      }
+    }
+    fetchProducts();
+  }, []);
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-    setProducts([...products, data])
-    const userData = JSON.parse(localStorage.getItem('userData') as string)
+    setProducts([...products, data])    
     const totalvalue = (data.price * data.quantity);
     const res = await createProduct (userData.id, data.name, data.quantity, data.price, totalvalue);
     console.log(res);    
@@ -139,7 +164,7 @@ export default function HomePage() {
         </div>
         {products.length > 0 && (
           <div className="mt-8 text-center">
-            <button className="w-full max-w-md px-4 py-3 text-[#CCF575] bg-[#1F1F1F] rounded-lg">
+            <button className="w-full max-w-md px-4 py-3 text-[#CCF575] bg-[#1F1F1F] rounded-lg" onClick={()=>navigate('/pdf')}>
               Generate PDF Invoice
             </button>
           </div>
