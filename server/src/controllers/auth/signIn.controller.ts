@@ -20,7 +20,7 @@ export const signIn = asyncHandler(async (req, res) => {
                     res.send("Wrong Password");
                 }
                 else {               
-                    res.send({ message: "User Registered successfully.", data: response })
+                    res.send({ message: "user login successfully.", data: response })
                 }
             });
         }
