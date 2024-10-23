@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { getProducts } from "../api/get/getProducts";
 import logo_dark from "../assets/images/logo-dark.png";
 import html2canvas from "html2canvas";
+import Navbar from "../components/shared/Navbar";
 
 interface Product {
   name: string;
@@ -16,7 +17,7 @@ export default function PdfPage() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await getProducts(userData.id); 
+        const res = await getProducts(userData.id);
         if (res?.data) {
           const filteredProducts = res.data.map((product: any) => ({
             name: product.name,
@@ -24,7 +25,7 @@ export default function PdfPage() {
             quantity: product.qty as number,
           }));
           console.log("filteredProducts are: ", filteredProducts);
-          setProducts(filteredProducts); 
+          setProducts(filteredProducts);
         }
       } catch (error) {
         console.log("Error fetching products", error);
@@ -48,16 +49,19 @@ export default function PdfPage() {
     const element = pdfRef.current;
     if (element) {
       const canvas = await html2canvas(element);
-      const imgData = canvas.toDataURL("image/png"); 
+      const imgData = canvas.toDataURL("image/png");
 
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/api/products/generate-pdf`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ imgData }), // Send the Base64 image data
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_API_ENDPOINT}/api/products/generate-pdf`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ imgData }), // Send the Base64 image data
+          }
+        );
 
         if (response.ok) {
           const blob = await response.blob();
@@ -80,24 +84,16 @@ export default function PdfPage() {
   return (
     <div className="min-h-screen bg-black">
       {/* Navbar */}
-      <nav className="bg-[#1F1F1F] shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex">
-              <div className="flex-shrink-0 flex items-center">
-                <span className="font-bold text-xl text-white">
-                  Invoice Generator
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={downloadPdf}>
-                Download PDF
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navbar
+        navButton={
+          <button
+            onClick={downloadPdf}
+            className="bg-[#CCF575] rounded-lg px-6 relative transform transition-transform duration-300 hover:-translate-x-4"
+          >
+            Download PDF
+          </button>
+        }
+      />
 
       {/* Main content */}
       <div
