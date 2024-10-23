@@ -2,12 +2,13 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
-import { useContext, ReactNode, useState } from "react";
+import { useContext, ReactNode, useState, useEffect } from "react";
 import UserContext from "./context/UserContext";
 
 
 function UserProvider({ children }: { children: ReactNode }) {
   const [login, setLogin] = useState(false);
+  // const [products, setProducts] = useState ([]);
   return (
     <UserContext.Provider value={{ login, setLogin }}>
       {children}
@@ -22,6 +23,11 @@ function ProtectedRoute({ children }: { children: ReactNode }) {
 }
 
 function App() {
+
+  useEffect (()=>{
+
+  })
+
   return (
     <UserProvider>
       <Routes>

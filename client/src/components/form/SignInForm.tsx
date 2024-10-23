@@ -17,13 +17,12 @@ export default function SignInForm() {
   const onSubmit: SubmitHandler<SigninFormValues> = async data => {
     try {
       const res = await signIn(data.email, data.password);
-      if (res?.status === 200){
-        console.log(res);        
+      if (res?.message === "user login successfully."){
+        console.log(res);    
+        navigation ('/home');
+        // console.log(data);    
+        localStorage.setItem('userData', JSON.stringify(res.data));
         setLogin (true);
-        // navigation ('/home');
-      }
-      else {
-        navigation ('/');
       }
     } catch (error) {
       console.log("Signin error: ", error);      

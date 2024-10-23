@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { PlusCircle, ArrowDown, ArrowUp } from 'lucide-react'
 import Navbar from '../components/shared/Navbar'
+import { createProduct } from '../api/post/createProduct'
+import UserContext from '../context/UserContext'
 
 interface Product {
   name: string
@@ -18,9 +20,14 @@ interface FormInputs {
 export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([])
   const { register, handleSubmit, reset } = useForm<FormInputs>()
+  const {setLogin} = useContext (UserContext);
 
-  const onSubmit: SubmitHandler<FormInputs> = (data) => {
+  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     setProducts([...products, data])
+    const userData = JSON.parse(localStorage.getItem('userData') as string)
+    const totalvalue = (data.price * data.quantity);
+    const res = await createProduct (userData.id, data.name, data.quantity, data.price, totalvalue);
+    console.log(res);    
     reset()
   }
 
@@ -32,9 +39,17 @@ export default function HomePage() {
     return calculateTotal() * 0.18
   }
 
+  function handleNavigate (){
+    setLogin (false);    
+    localStorage.clear();
+  }
+
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-black to-black relative">
-      <Navbar/>
+      <Navbar navButton={<button onClick={handleNavigate} className="bg-[#CCF575] rounded-lg px-6 relative transform transition-transform duration-300 hover:-translate-x-4">
+          LogOut
+        </button>}/>
       {/* <div className="absolute rounded-full bg-[#404993] mix-blend-screen filter blur-3xl opacity-3"></div> */}
       <main className="container mx-auto px-4 py-8 text-white my-auto">
       <h1 className='text-4xl font-bold mt-20 mb-3'>Add Products</h1>
