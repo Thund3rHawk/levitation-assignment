@@ -1,6 +1,6 @@
-# Levitation Assignment# Levitation Assignment
+# Levitation Assignment
 
-Welcome to the Levitation Assignment project!
+Welcome to the Levitation Assignment project! 🎉
 
 ## Project Overview
 
