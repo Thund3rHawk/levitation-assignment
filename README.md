@@ -7,10 +7,10 @@ Welcome to the Levitation Assignment project!
 This project is divided into two main parts:
 
 1. **Backend**: Hosted on Render
-    - URL: [Levitation Backend](https://levitation-assignment-8t6a.onrender.com)
+   - ✅ URL: https://levitation-assignment-8t6a.onrender.com
 
 2. **Frontend**: Hosted on Vercel
-    - URL: [Levitation Frontend](https://levitation-assignment-one.vercel.app)
+   - ✅ URL: https://levitation-assignment-one.vercel.app
 
 ## Getting Started
 
@@ -25,7 +25,7 @@ To get started with the project, follow these steps:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/levitation-assignment.git
+    git clone https://github.com/Thund3rHawk/levitation-assignment.git
     ```
 2. Navigate to the project directory:
     ```bash
