@@ -7,7 +7,9 @@ export const generatePdf = asyncHandler(async (req, res) => {
     const { imgData } = req.body;
 
     try {
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
         const page = await browser.newPage();
         const htmlContent = `
       <html>
