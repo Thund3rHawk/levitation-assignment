@@ -82,7 +82,7 @@ export default function SignInForm() {
         <div className="mt-8">
           <button
             type="submit"
-            className=" bg-[#1F1F1F] py-4 px-6 rounded-lg text-[#CCF575]"
+            className="bg-[#1F1F1F] py-4 px-6 rounded-lg text-[#CCF575] transition-all ease-in-out duration-500 hover:bg-gradient-to-r hover:from-black hover:to-[#1F1F1F] transform"
           >
             Login now
           </button>
