@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
@@ -29,7 +29,9 @@ function App() {
   const { setLogin } = useContext(UserContext);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation(); 
 
+  // Initial auth check
   useEffect(() => {
     const checkAuth = () => {
       const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
@@ -40,14 +42,18 @@ function App() {
     checkAuth();
   }, [setLogin]);
 
+  // Modified navigation logic
   useEffect(() => {
     if (!isLoading) {
       const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-      if (isLoggedIn) {
+      if (isLoggedIn && (location.pathname === '/' || location.pathname === '/sign-in')) {
         navigate("/home", { replace: true });
       }
+      if (!isLoggedIn && !['/sign-in', '/'].includes(location.pathname)) {
+        navigate("/sign-in", { replace: true });
+      }
     }
-  }, [isLoading, navigate]);
+  }, [isLoading, navigate, location.pathname]);
 
   if (isLoading) {
     return null;
