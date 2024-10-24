@@ -1,11 +1,10 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
-import { useContext, ReactNode, useState} from "react";
+import { useContext, ReactNode, useState, useEffect } from "react";
 import UserContext from "./context/UserContext";
 import PdfPage from "./pages/PdfPage";
-
 
 function UserProvider({ children }: { children: ReactNode }) {
   const [login, setLogin] = useState(false);
@@ -19,16 +18,40 @@ function UserProvider({ children }: { children: ReactNode }) {
 // ProtectedRoute component
 function ProtectedRoute({ children }: { children: ReactNode }) {
   const { login } = useContext(UserContext);
-  return login ? children : <Navigate to="/sign-in" />;
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  if (!login && !isLoggedIn) {
+    return <Navigate to="/sign-in" replace />;
+  }
+  return children;
 }
 
 function App() {
-  // const {setLogin} = useContext (UserContext)
-  // useEffect (()=>{
-  //   if (localStorage.getItem("userData")){
-  //     setLogin(true);
-  //   }
-  // },[]);
+  const { setLogin } = useContext(UserContext);
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+      setLogin(isLoggedIn);
+      setIsLoading(false);
+    };
+
+    checkAuth();
+  }, [setLogin]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+      if (isLoggedIn) {
+        navigate("/home", { replace: true });
+      }
+    }
+  }, [isLoading, navigate]);
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <UserProvider>
@@ -39,7 +62,7 @@ function App() {
           path="/home"
           element={
             <ProtectedRoute>
-              <HomePage />              
+              <HomePage />
             </ProtectedRoute>
           }
         />
@@ -47,7 +70,7 @@ function App() {
           path="/pdf"
           element={
             <ProtectedRoute>
-              <PdfPage />             
+              <PdfPage />
             </ProtectedRoute>
           }
         />
