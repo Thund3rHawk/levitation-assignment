@@ -15,6 +15,7 @@ export default function PdfPage() {
   const userData = JSON.parse(localStorage.getItem("userData") as string);
   const pdfRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    window.scrollTo(0, 0);
     async function fetchProducts() {
       try {
         const res = await getProducts(userData.id);
